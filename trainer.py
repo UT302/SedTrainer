@@ -17,34 +17,47 @@ def makeSentence():
 
   genSentence = [random.choice(adjective),(random.choice(noun)),(random.choice(verb)),random.choice(noun)]
   
-  randWord = random.choice(genSentence)
+  return (genSentence)
+
+startSentence = makeSentence()
+
+def sentenceShift():
+  
+  randWord = random.choice(startSentence)
       
-  wordInd = genSentence.index(randWord)
+  wordInd = startSentence.index(randWord)
 
   revWord = randWord[::-1]
   
-  revSentence = genSentence.copy()
+  revSentence = startSentence.copy()
   
   revSentence[wordInd] = revWord
 
-  return (" ".join(revSentence))
+  return (revSentence)
+
+endSentence = sentenceShift()
+
+strStart = (" ".join(startSentence))
+strEnd = (" ".join(endSentence))
 
 
-print("""Welcome to the sed program trainer.
-Change the word in this sentence to the correct one:""")
+
+
+print(f"""Welcome to the sed program trainer.
+Change the word in this text to the correct one:
+Given text:
+{strEnd}""")
 print("-" * 25)
-startSentence = makeSentence()
-print(startSentence)
+print(f"""Correct version:
+{strStart}""")
 print("-" * 25)
+print("Your sed script:")
+userSedScript = input("> ")
 
+answer = subprocess.getoutput(f"echo {strEnd} | {userSedScript}")
 
-userScript = input("> ")
+if str(answer) == str(strStart):
 
-#subprocess.call(userScript, shell = True)
-#subprocess.run(userScript, text = True, shell = True)
-answer = subprocess.getoutput(userScript)
-
-if answer == "trainer.py":
     print("good job!")
 
     
