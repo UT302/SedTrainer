@@ -1,9 +1,9 @@
 import shlex, subprocess
-import random
+import random 
 import io
 import math
 import sys
-
+import string 
 
 adjective = ["big","small","enormous","ephereal"]
 
@@ -15,25 +15,25 @@ verb = ["ran after", "ate", "bit", "kicked"]
 
 def makeSentence():
 
-  genSentence = [random.choice(adjective),(random.choice(noun)),(random.choice(verb)),random.choice(noun)]
+    genSentence = [random.choice(adjective),(random.choice(noun)),(random.choice(verb)),random.choice(noun)]
   
-  return (genSentence)
+    return (genSentence)
 
 startSentence = makeSentence()
 
 def sentenceShift():
-  
-  randWord = random.choice(startSentence)
       
-  wordInd = startSentence.index(randWord)
+    randWord = random.choice(startSentence)
+         
+    wordInd = startSentence.index(randWord)
 
-  revWord = randWord[::-1]
-  
-  revSentence = startSentence.copy()
-  
-  revSentence[wordInd] = revWord
+    revWord = randWord[::-1]
+      
+    revSentence = startSentence.copy()
+     
+    revSentence[wordInd] = revWord
 
-  return (revSentence)
+    return (revSentence)
 
 endSentence = sentenceShift()
 
@@ -41,17 +41,48 @@ strStart = (" ".join(startSentence))
 strEnd = (" ".join(endSentence))
 
 
+def randChars(chrAmount):
+
+    charList = (list(string.ascii_letters))
+
+    randStr = (random.sample(charList, k = chrAmount))
+
+    cleanStr = ("".join(randStr))
+
+    return (cleanStr)
+
+def lowerCase(strStart):
+
+    if strStart == strStart.lower():
+        print("Right answer.")
+    else:
+        print("Wrong answer.") 
+
+
+randChr = (random.randrange(5, 7))
+
+fRange = [randChars(randChr)]
+
+qRange = [lowerCase]
+
+def quizChooser():
+
+    problem = [random.choice(fRange), random.choice(qRange)] 
+
+    return (problem)
+
 
 
 print(f"""Welcome to the sed program trainer.
-Change the word in this text to the correct one:
 Given text:
 {strEnd}""")
 print("-" * 25)
 print(f"""Correct version:
-{strStart}""")
+#{strStart}""")
 print("-" * 25)
 print("Your sed script:")
+print(strStart)
+
 userSedScript = input("> ")
 
 answer = subprocess.getoutput(f"echo {strEnd} | {userSedScript}")
@@ -59,10 +90,3 @@ answer = subprocess.getoutput(f"echo {strEnd} | {userSedScript}")
 if str(answer) == str(strStart):
 
     print("good job!")
-
-    
-
-
-
-
-
